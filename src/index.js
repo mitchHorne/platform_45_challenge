@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
-import Router from "./Routes";
+import { Router } from "./Routes";
 
 const index = () =>
   ReactDOM.render(<Router />, document.getElementById("root"));

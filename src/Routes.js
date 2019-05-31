@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
@@ -8,15 +8,15 @@ import { ToastContainer } from "react-toastify";
 import { theme } from "./theme";
 
 // Component and page imports
-import ScrollToTop from "./components/scrollToTop";
+import { ScrollToTop } from "./components/scrollToTop";
 import { NotFoundPage } from "./containers/404";
 import { Home } from "./containers/home";
 
-export class AppRouter extends Component {
+export class Router extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <Router>
+        <BrowserRouter>
           <ScrollToTop>
             <div>
               <Helmet>
@@ -34,10 +34,8 @@ export class AppRouter extends Component {
               </Switch>
             </div>
           </ScrollToTop>
-        </Router>
+        </BrowserRouter>
       </ThemeProvider>
     );
   }
 }
-
-export default AppRouter;

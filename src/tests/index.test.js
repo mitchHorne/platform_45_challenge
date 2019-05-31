@@ -4,7 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "../";
-import Router from "../Routes";
+import { Router } from "../Routes";
 
 jest.mock("react-dom", () => ({ render: jest.fn() }));
 
