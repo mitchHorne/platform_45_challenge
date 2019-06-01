@@ -1,11 +1,10 @@
-import "jest-styled-components";
 import React from "react";
-import { shallow } from "enzyme";
 
+import * as utils from "../../../utils/testing";
 import { FlexContainer } from "../";
 
 describe("FlexContainer", () => {
   it("should render without crashing", () => {
-    shallow(<FlexContainer />);
+    utils.testComponentRender(<FlexContainer />);
   });
 });

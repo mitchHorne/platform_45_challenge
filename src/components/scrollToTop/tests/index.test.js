@@ -1,12 +1,12 @@
-import "jest-styled-components";
 import React from "react";
 import { shallow } from "enzyme";
 
+import * as utils from "../../../utils/testing";
 import { ScrollToTopComponent as ScrollToTop } from "../";
 
 describe("ScrollToTop", () => {
   it("should render without crashing", () => {
-    shallow(<ScrollToTop />);
+    utils.testComponentRender(<ScrollToTop />);
   });
 
   describe("componentDidUpdate", () => {

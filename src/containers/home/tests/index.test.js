@@ -1,12 +1,12 @@
-import "jest-styled-components";
 import React from "react";
 import { shallow } from "enzyme";
 
+import * as utils from "../../../utils/testing";
 import { Home } from "../";
 
 describe("Home", () => {
   it("should render without crashing", () => {
-    shallow(<Home />);
+    utils.testComponentRender(<Home />);
   });
 
   describe("toggleOverlay", () => {
