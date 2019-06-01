@@ -1,7 +1,8 @@
 body {
   color: #383838;
   font-family: Arial;
-  font-size: 14px;
+  font-size: 18px;
+  line-height: 1.53;
   margin: 0;
   padding: 0;
   text-align: center;
@@ -16,10 +17,6 @@ h6 {
   font-family: Arial;
   font-weight: bold;
   text-align: center;
-}
-
-p {
-  font-size: 18px;
 }
 
 * {
