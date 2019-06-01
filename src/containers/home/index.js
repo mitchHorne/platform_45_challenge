@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { FlexContainer } from "../../components/flexContainer";
 import { SideNav } from "../../components/sideNav";
 import { Overlay } from "../../components/overlay";
+import { SubmissionForm } from "../../components/submissionForm";
 
 // These values would most likely be retrieved through a REST API endpoint
 // so I'm passing them down from the container, so it can handle the logic
@@ -14,8 +15,9 @@ export class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { overlayActive: false };
+    this.state = { overlayActive: false, valid: false };
 
+    this.toggleOverlay = this.toggleOverlay.bind(this);
     this.toggleOverlay = this.toggleOverlay.bind(this);
   }
 
@@ -23,21 +25,27 @@ export class Home extends Component {
     this.setState({ ...this.state, overlayActive: !this.state.overlayActive });
   }
 
+  toggleValid() {
+    this.setState({ ...this.state, valid: !this.state.valid });
+  }
+
   render() {
-    const { overlayActive } = this.state;
+    const { toggleOverlay, toggleValid } = this;
+    const { overlayActive, valid } = this.state;
 
     return (
       <FlexContainer>
         <SideNav
           overlayActive={overlayActive}
           profileImage={ProfileImageSrc}
-          toggleOverloay={this.toggleOverlay}
+          toggleOverloay={toggleOverlay}
         />
         <Overlay
           active={overlayActive}
           heading={overlayHeading}
           text={overlayText}
         />
+        <SubmissionForm valid={valid} toggleValid={toggleValid} />
       </FlexContainer>
     );
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import overlayToggleSrc from "../../assets/arrow.png";
 
@@ -83,4 +84,10 @@ export const SideNav = props => {
       </Container>
     </Nav>
   );
+};
+
+SideNav.propTypes = {
+  overlayActive: PropTypes.bool,
+  profileImage: PropTypes.string,
+  toggleOverloay: PropTypes.func
 };

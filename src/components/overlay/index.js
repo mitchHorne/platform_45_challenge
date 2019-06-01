@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import * as textUtils from "../../utils/textTransform";
 
@@ -30,4 +31,10 @@ export const Overlay = props => {
       <p>{textUtils.transformText(text)}</p>
     </OverlayContainer>
   );
+};
+
+Overlay.propTypes = {
+  active: PropTypes.bool,
+  heading: PropTypes.string,
+  text: PropTypes.string
 };
