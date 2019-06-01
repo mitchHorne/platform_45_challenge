@@ -3,19 +3,35 @@ import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
 
 /**
- * Clicks on the provided component
- * @param Component {Renderable React object}
+ * Blurs a specified child component
+ * @param {Renderable React object || Enzyme wrapper object} Component
+ * @param {React object} ChildComponent
  */
-// export function clickComponent(Component) {
-//   shallow(Component);
-// }
+export function blurChildComponent(Component, ChildComponent) {
+  // Checks if the passed component is already an enzyme wrapper
+  if (Component.find)
+    return Component.find(ChildComponent)
+      .props()
+      .onBlur();
+
+  shallow(Component)
+    .find(ChildComponent)
+    .props()
+    .onBlur();
+}
 
 /**
  * Clicks on a specified child component
- * @param {Renderable React object} Component
- * @param {React object}            ChildComponent
+ * @param {Renderable React object || Enzyme wrapper object} Component
+ * @param {React object} ChildComponent
  */
 export function clickChildComponent(Component, ChildComponent) {
+  // Checks if the passed component is already an enzyme wrapper
+  if (Component.find)
+    return Component.find(ChildComponent)
+      .props()
+      .onClick();
+
   shallow(Component)
     .find(ChildComponent)
     .props()
@@ -36,7 +52,7 @@ export function generateEnzymeWrapper(Component) {
 /**
  * Retrieves state proprty and returns it from an Enzyme wrapper
  * @param {Enzyme wrapper object} wrapper
- * @param {String}                property
+ * @param {String} property
  * @returns {any}
  */
 export function getStateProperty(wrapper, property) {
@@ -44,13 +60,27 @@ export function getStateProperty(wrapper, property) {
 }
 
 /**
- * Runs given component class function
- * @param {Renderable React object} Component
- * @param {String}                  func
- * @param {Array}                   params
+ * Mocks given component class function
+ * @param {Enzyme wrapper object} wrapper
+ * @param {String} func
+ * @param {Array} params
  */
-export function runComponentClassFunction(wrapper, func, params = []) {
-  wrapper.instance()[func](...params);
+export function mockComponentClassFunction(wrapper, func, mock) {
+  wrapper.instance()[func] = mock;
+}
+
+/**
+ * Runs given component class function
+ * @param {Renderable React object || Enzyme wrapper object} Component
+ * @param {String} func
+ * @param {Array} params
+ */
+export function runComponentClassFunction(Component, func, params = []) {
+  if (Component.instance) return Component.instance()[func](...params);
+
+  shallow(Component)
+    .instance()
+    [func](...params);
 }
 
 /**
@@ -90,6 +120,23 @@ export function testCssPropery(Component, property, expectedValue) {
 export function testCssMediaPropery(Component, property, expectedValue, media) {
   const component = renderer.create(Component).toJSON();
   expect(component).toHaveStyleRule(property, expectedValue, { media });
+}
+
+/**
+ * Tests if a react component has a specific css property with a given CSS modifier
+ * @param {Renderable React object} Component
+ * @param {String}                  property
+ * @param {String}                  expectedValue
+ * @param {String}                  modifier
+ */
+export function testCssModifierPropery(
+  Component,
+  property,
+  expectedValue,
+  modifier
+) {
+  const component = renderer.create(Component).toJSON();
+  expect(component).toHaveStyleRule(property, expectedValue, { modifier });
 }
 
 /**
