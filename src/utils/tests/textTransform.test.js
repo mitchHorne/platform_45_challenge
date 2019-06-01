@@ -24,31 +24,34 @@ describe("textTransform", () => {
       const string = `String not to be split ::${jsonString}::`;
 
       const expected = [
-        "String not to be split ",
+        <span key={`TEXT_TRANSFORMED_STRING_${0}`}>
+          {"String not to be split "}
+        </span>,
         <u>
           <b>Transformed</b>
         </u>,
-        ""
+        <span key={`TEXT_TRANSFORMED_STRING_${2}`}>{""}</span>
       ];
 
       const received = transformText(string, mockTransformers);
 
       expect(received).toEqual(expected);
-      expect(mockTransformers.bold).toHaveBeenCalled();
-      expect(mockTransformers.bold).toHaveBeenCalledWith("Transformed");
-      expect(mockTransformers.underline).toHaveBeenCalled();
-      expect(mockTransformers.underline).toHaveBeenCalledWith(
-        <b>Transformed</b>
-      );
+
+      const { bold: boldMock, underline: underlineMock } = mockTransformers;
+
+      expect(boldMock).toHaveBeenCalled();
+      expect(boldMock).toHaveBeenCalledWith("Transformed", 1);
+      expect(underlineMock).toHaveBeenCalled();
+      expect(underlineMock).toHaveBeenCalledWith(<b>Transformed</b>, 1);
     });
   });
 
   describe("boldString", () => {
     it("should return a string with encapsulating <b> tags", () => {
       const string = "My awesome string";
-      const expected = <b>{string}</b>;
+      const expected = <b key={`TEXT_TRANSFORMED_BOLD_STRING_0`}>{string}</b>;
 
-      const received = boldString(string);
+      const received = boldString(string, 0);
 
       expect(received).toEqual(expected);
     });
@@ -57,9 +60,11 @@ describe("textTransform", () => {
   describe("underlineString", () => {
     it("should return a string with encapsulating <u> tags", () => {
       const string = "My awesome string";
-      const expected = <u>{string}</u>;
+      const expected = (
+        <u key={`TEXT_TRANSFORMED_UNDERLINED_STRING_0`}>{string}</u>
+      );
 
-      const received = underlineString(string);
+      const received = underlineString(string, 0);
 
       expect(received).toEqual(expected);
     });

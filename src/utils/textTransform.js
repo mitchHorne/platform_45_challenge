@@ -1,11 +1,11 @@
 import React from "react";
 
-export function boldString(string) {
-  return <b>{string}</b>;
+export function boldString(string, index) {
+  return <b key={`TEXT_TRANSFORMED_BOLD_STRING_${index}`}>{string}</b>;
 }
 
-export function underlineString(string) {
-  return <u>{string}</u>;
+export function underlineString(string, index) {
+  return <u key={`TEXT_TRANSFORMED_UNDERLINED_STRING_${index}`}>{string}</u>;
 }
 
 const defaultTransformations = {
@@ -20,7 +20,7 @@ export function transformText(text, transformations = defaultTransformations) {
 
   if (splitText.length === 1) return text;
 
-  const transformedTextArray = splitText.map(string => {
+  const transformedTextArray = splitText.map((string, index) => {
     try {
       let { operations, text } = JSON.parse(string);
 
@@ -28,10 +28,10 @@ export function transformText(text, transformations = defaultTransformations) {
       operations.forEach(operation => {
         switch (operation) {
           case "bold":
-            text = transformations.bold(text);
+            text = transformations.bold(text, index);
             break;
           case "underline":
-            text = transformations.underline(text);
+            text = transformations.underline(text, index);
             break;
           default:
             break;
@@ -40,7 +40,7 @@ export function transformText(text, transformations = defaultTransformations) {
 
       return text;
     } catch (e) {
-      return string;
+      return <span key={`TEXT_TRANSFORMED_STRING_${index}`}>{string}</span>;
     }
   });
 
