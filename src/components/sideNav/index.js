@@ -11,6 +11,12 @@ export const Nav = styled.div`
   position: fixed;
   width: 20%;
   z-index: 3;
+
+  @media only screen and (max-width: 768px) {
+    height: 90vh;
+    padding: 5vh 5%;
+    width: 90%;
+  }
 `;
 
 export const Container = styled.div`
@@ -25,6 +31,10 @@ export const Container = styled.div`
 
 export const ProfileImage = styled.img`
   width: 60%;
+
+  @media only screen and (max-width: 768px) {
+    width: 75%;
+  }
 `;
 
 export const OverlayToggleButton = styled.img`
@@ -35,6 +45,18 @@ export const OverlayToggleButton = styled.img`
   :hover {
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 768px) {
+    width: 15%;
+
+    ${props =>
+      props.overlayActive
+        ? "transform: rotate(270deg);"
+        : "transform: rotate(90deg);"}
+  }
+
+  @media only screen and (max-width: 481px) {
+    width: 25%;
 `;
 
 export const SideNav = props => {

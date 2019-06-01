@@ -42,6 +42,24 @@ describe("SideNav", () => {
 
       expect(toggleOverloayMock).toHaveBeenCalled();
     });
+
+    it("should have a transform property of rotate(90deg) if prop overlayActive is false and max-width < 768px", () => {
+      utils.testCssMediaPropery(
+        <OverlayToggleButton overlayActive={false} />,
+        "transform",
+        "rotate(90deg)",
+        "only screen and (max-width: 768px)"
+      );
+    });
+
+    it("should have a transform property of rotate(270deg) if prop overlayActive is true and max-width < 768px", () => {
+      utils.testCssMediaPropery(
+        <OverlayToggleButton overlayActive={true} />,
+        "transform",
+        "rotate(270deg)",
+        "only screen and (max-width: 768px)"
+      );
+    });
   });
 
   describe("Nav", () => {
