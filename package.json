@@ -52,7 +52,8 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
       "!src/theme/*",
-      "!src/setupTests.js"
+      "!src/setupTests.js",
+      "!src/utils/testing.js"
     ],
     "coverageThreshold": {
       "global": {
