@@ -1,8 +1,7 @@
-import "jest-styled-components";
 import React from "react";
 import { shallow } from "enzyme";
-import renderer from "react-test-renderer";
 
+import * as utils from "../../../utils/testing";
 import { theme } from "../../../theme";
 import {
   Container,
@@ -14,25 +13,26 @@ import {
 
 describe("SideNav", () => {
   it("should render without crashing", () => {
-    shallow(<SideNav />);
+    utils.testComponentRender(<SideNav />);
   });
 
   describe("Container", () => {
     it("should render without crashing", () => {
-      shallow(<Container theme={theme} />);
+      utils.testComponentRender(<Container theme={theme} />);
     });
   });
 
   describe("OverlayToggleButton", () => {
     it("should render without crashing", () => {
-      renderer.create(<OverlayToggleButton />);
+      utils.testComponentDeepRender(<OverlayToggleButton />);
     });
 
     it("should have a transform property of rotate(180deg) if prop overlayActive is true", () => {
-      const component = renderer
-        .create(<OverlayToggleButton overlayActive={true} />)
-        .toJSON();
-      expect(component).toHaveStyleRule("transform", "rotate(180deg)");
+      utils.testCssPropery(
+        <OverlayToggleButton overlayActive={true} />,
+        "transform",
+        "rotate(180deg)"
+      );
     });
 
     it("should call toggleOverloay on click", () => {
@@ -50,18 +50,21 @@ describe("SideNav", () => {
 
   describe("Nav", () => {
     it("should render without crashing", () => {
-      shallow(<Nav theme={theme} />);
+      utils.testComponentRender(<Nav theme={theme} />);
     });
 
     it("should have a background of theme.colors.accent", () => {
-      const component = renderer.create(<Nav theme={theme} />).toJSON();
-      expect(component).toHaveStyleRule("background", theme.colors.accent);
+      utils.testCssPropery(
+        <Nav theme={theme} />,
+        "background",
+        theme.colors.accent
+      );
     });
   });
 
   describe("ProfileImage", () => {
     it("should render without crashing", () => {
-      shallow(<ProfileImage />);
+      utils.testComponentRender(<ProfileImage />);
     });
   });
 });
