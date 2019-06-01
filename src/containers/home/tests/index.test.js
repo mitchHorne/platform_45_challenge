@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "enzyme";
 
 import * as utils from "../../../utils/testing";
 import { Home } from "../";
@@ -11,15 +10,15 @@ describe("Home", () => {
 
   describe("toggleOverlay", () => {
     it("should toggle state.overlayActive between true/false", () => {
-      const wrapper = shallow(<Home />);
-      const initialOverlayState = wrapper.state().overlayActive;
+      const wrapper = utils.generateEnzymeWrapper(<Home />);
+      const initialVal = utils.getStateProperty(wrapper, "overlayActive");
 
-      wrapper.instance().toggleOverlay();
+      utils.runComponentClassFunction(wrapper, "toggleOverlay");
 
-      const alteredOverlayState = wrapper.state().overlayActive;
+      const alteredVal = utils.getStateProperty(wrapper, "overlayActive");
 
-      expect(initialOverlayState).toEqual(false);
-      expect(alteredOverlayState).toEqual(true);
+      expect(initialVal).toEqual(false);
+      expect(alteredVal).toEqual(true);
     });
   });
 });
