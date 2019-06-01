@@ -48,3 +48,14 @@ export function testCssPropery(Component, property, expectedValue) {
   const component = renderer.create(Component).toJSON();
   expect(component).toHaveStyleRule(property, expectedValue);
 }
+
+/**
+ * Tests if a react component has a specific css property
+ * @param Component {Renderable React object}
+ * @param props     {Object}
+ * @param newProps  {Object}
+ */
+export function updateProps(Component, newProps) {
+  const wrapper = shallow(Component);
+  wrapper.setProps(newProps);
+}
