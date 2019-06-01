@@ -14,6 +14,7 @@ export const OverlayContainer = styled.div`
   text-align: left;
   transition: left 0.25s, top 0.25s;
   width: 50%;
+  z-index: 2;
 
   h1 {
     text-align: left;
