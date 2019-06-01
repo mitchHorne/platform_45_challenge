@@ -10,6 +10,7 @@ export const Nav = styled.div`
   padding: 5vh 5%;
   position: fixed;
   width: 20%;
+  z-index: 3;
 `;
 
 export const Container = styled.div`
