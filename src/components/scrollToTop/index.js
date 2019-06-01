@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 export class ScrollToTopComponent extends Component {
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
       window.scrollTo(0, 0);
     }
   }
