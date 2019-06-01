@@ -37,12 +37,9 @@ describe("SideNav", () => {
 
     it("should call toggleOverloay on click", () => {
       const toggleOverloayMock = jest.fn();
-      const wrapper = shallow(<SideNav toggleOverloay={toggleOverloayMock} />);
+      const component = <SideNav toggleOverloay={toggleOverloayMock} />;
 
-      wrapper
-        .find(OverlayToggleButton)
-        .props()
-        .onClick();
+      utils.clickChildComponent(component, OverlayToggleButton);
 
       expect(toggleOverloayMock).toHaveBeenCalled();
     });

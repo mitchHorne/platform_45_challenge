@@ -3,6 +3,26 @@ import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
 
 /**
+ * Clicks on the provided component
+ * @param Component {Renderable React object}
+ */
+// export function clickComponent(Component) {
+//   shallow(Component);
+// }
+
+/**
+ * Clicks on a specified child component
+ * @param Component       {Renderable React object}
+ * @param ChildComponent  {React object}
+ */
+export function clickChildComponent(Component, ChildComponent) {
+  shallow(Component)
+    .find(ChildComponent)
+    .props()
+    .onClick();
+}
+
+/**
  * Tests if a react component deep renders without crashing
  * @param Component {Renderable React object}
  */
