@@ -1,20 +1,19 @@
-import "jest-styled-components";
 import React from "react";
-import { shallow } from "enzyme";
 
+import * as utils from "../../../utils/testing";
 import { ScrollToTopComponent as ScrollToTop } from "../";
 
 describe("ScrollToTop", () => {
   it("should render without crashing", () => {
-    shallow(<ScrollToTop />);
+    utils.testComponentRender(<ScrollToTop />);
   });
 
   describe("componentDidUpdate", () => {
     it("should call window.scrollTo with (0,0) if the current location (url) is is changes", () => {
       window.scrollTo = jest.fn();
-      const wrapper = shallow(<ScrollToTop location="First location" />);
+      const newProps = { location: "newLocation" };
 
-      wrapper.setProps({ location: "newLocation" });
+      utils.updateProps(<ScrollToTop location="First location" />, newProps);
 
       expect(window.scrollTo).toHaveBeenCalled();
       expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
@@ -22,9 +21,9 @@ describe("ScrollToTop", () => {
 
     it("should not call window.scrollTo if the current location (url) does not change", () => {
       window.scrollTo = jest.fn();
+      const newProps = { location: "Same location" };
 
-      const wrapper = shallow(<ScrollToTop location="Same location" />);
-      wrapper.setProps({ location: "Same location" });
+      utils.updateProps(<ScrollToTop location="Same location" />, newProps);
 
       expect(window.scrollTo).not.toHaveBeenCalled();
     });

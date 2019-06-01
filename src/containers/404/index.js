@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
 export const Heading = styled.h1`
   color: ${props => props.theme.colors.danger};
   font-size: 6em;
@@ -13,7 +14,7 @@ export const SubHeading = styled.h2`
   margin: 0;
 `;
 
-const Body = styled.div`
+export const Body = styled.div`
   font-size: 3em;
   margin: 0;
 

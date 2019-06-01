@@ -1,16 +1,10 @@
 export const colors = {
-  darkPrimary: "#25304C",
-  lightPrimary: "#EBECEF",
-  xLightPrimary: "#eff2f9",
-  primary: "#15233E",
-  textIcons: "#FFFFFF",
-  accent: "#F6AF1B",
-  accentLight: "rgba(246, 174, 28, 0.65)",
-  accentAlt: "#1858BF",
-  accentAltLight: "#e8f2fe",
-  primaryText: "#212121",
-  secondaryText: "#677081",
-  divider: "rgba(127, 134, 151, 0.65)",
-  danger: "#EA4236",
-  success: "#34A853"
+  accent: "#ffd500",
+  accentAlt: "#ff9200",
+  danger: "#ff2323",
+  focusAccent: "#b1bfcd",
+  hoverAccent: "#ff9200",
+  inputText: "#373d40",
+  positiveAccent: "#60e6c5",
+  primaryText: "#383838"
 };

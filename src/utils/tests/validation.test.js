@@ -1,4 +1,4 @@
-import { validateEmail } from "../Validation";
+import { validateEmail } from "../validation";
 
 describe("Utils", () => {
   describe("validateEmail", () => {
