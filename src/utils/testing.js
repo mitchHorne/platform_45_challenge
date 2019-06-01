@@ -81,6 +81,18 @@ export function testCssPropery(Component, property, expectedValue) {
 }
 
 /**
+ * Tests if a react component has a specific css property at a given media query breakpoint
+ * @param {Renderable React object} Component
+ * @param {String}                  property
+ * @param {String}                  expectedValue
+ * @param {String}                  media
+ */
+export function testCssMediaPropery(Component, property, expectedValue, media) {
+  const component = renderer.create(Component).toJSON();
+  expect(component).toHaveStyleRule(property, expectedValue, { media });
+}
+
+/**
  * Tests if a react component has a specific css property
  * @param {Renderable React object} Component
  * @param {Object}                  props
