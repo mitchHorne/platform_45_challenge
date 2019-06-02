@@ -1,68 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Platform 45 challenge
 
-## Available Scripts
+### Notes
 
-In the project directory, you can run:
+- You need to run `npm i` or `yarn` before trying to start the project
 
-### `npm start`
+### Scripts
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## npm start || yarn start
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- Starts the project on [localhost:3000](http://localhost:3000/)
 
-### `npm test`
+## npm run build || yarn build
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Creates a static web page build of the project in the `/build` directory
 
-### `npm run build`
+## npm run test || yarn test
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Runs all automated (using jest) tests included in the project
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## npm run coverage || yarn coverage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Runs all tests and prints out an `lcov report` under the `/coverage` directory
+- Open the index.html file in the `/coverage` directory to see a full report of test coverage
 
-### `npm run eject`
+### Final Notes and Thoughts
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- An online deployed version of the application can be viewed on [Netlify](https://nervous-brown-2148e5.netlify.com/). Might be easier to test on mobile
+- I _may_ have gone overboard with the re-usability, referring to the submission form that generates it's own state and components based on a data structure found in `/containers/home/data.js`. It is useful, as long as it is not the only form to be created on the site, otherwise it sacrifices a bit of performance and simplicity for the flexibility. Just wanted to make it clear that I am aware of that
+- There is a `bug` of sorts when you move focus from an input to click on something else. This is unfortunately browser behavior, as the loss of focus on a component alters state and re-renders the form, cancelling any onClick or otherwise events captured in that split-second. Would be an easy fix using something like redux and redux-form, or simplifying the form _i.e. removing the data driven ultrare-usableness and using a set form_ - _However_, it will take a good deal of work implementing that on the form, so I won't be, just wanted to make you aware.
+- I added test utilities to `/utils/testing` to lessen the pain of testing React
