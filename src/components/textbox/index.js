@@ -43,20 +43,64 @@ export const Input = styled.input`
 `;
 
 export class Textbox extends Component {
-  constructor(props) {
-    super(props);
+  componentDidUpdate(prevProps) {
+    const { active: prevActive, value: prevValue } = prevProps;
+    const { active, value } = this.props;
 
-    this.state = { active: false };
+    // Prevent validation of untouched items
+    if (!active) return;
 
-    this.setActive = this.setActive.bind(this);
+    // Prevent unnecessary revalidations
+    if (prevActive === active && prevValue === value) return;
+
+    this.validate();
   }
 
-  setActive() {
-    this.setState({ ...this.state, active: true });
+  validate() {
+    const {
+      id,
+      required,
+      setError,
+      setFieldValidity,
+      valid,
+      validation,
+      value
+    } = this.props;
+
+    if (required && !value) {
+      setError(id, "This Field is required");
+      return setFieldValidity(id, false);
+    }
+
+    if (validation) {
+      const { error, func } = validation;
+
+      if (!func(value)) {
+        setError(id, error);
+        return setFieldValidity(id, false);
+      }
+
+      if (valid) return;
+
+      setError(id, null);
+      return setFieldValidity(id, true);
+    }
+
+    if (valid) return;
+
+    setError(id, null);
+    setFieldValidity(id, true);
   }
 
   render() {
-    const { label, placeholder } = this.props;
+    const {
+      id,
+      label,
+      placeholder,
+      setActive,
+      updateValue,
+      value
+    } = this.props;
 
     return (
       <TextboxContainer>
@@ -65,9 +109,11 @@ export class Textbox extends Component {
           {label}
         </label>
         <Input
-          onBlur={() => this.setActive()}
+          onBlur={() => setActive(id)}
+          onChange={e => updateValue(id, e.target.value)}
           placeholder={placeholder}
           type="text"
+          value={value}
         />
       </TextboxContainer>
     );
@@ -75,6 +121,14 @@ export class Textbox extends Component {
 }
 
 Textbox.propTypes = {
+  id: PropTypes.string,
   label: PropTypes.string,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  required: PropTypes.bool,
+  setActive: PropTypes.func,
+  setError: PropTypes.func,
+  setFieldValidity: PropTypes.func,
+  updateValue: PropTypes.func,
+  validation: PropTypes.object,
+  value: PropTypes.string
 };

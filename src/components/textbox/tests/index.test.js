@@ -9,27 +9,202 @@ describe("Textbox", () => {
     utils.testComponentRender(<Textbox />);
   });
 
-  it("should call setActive when Input loses focus", () => {
+  it("should call setActive on Input blur", () => {
     const setActiveMock = jest.fn();
-    const wrapper = utils.generateEnzymeWrapper(<Textbox />);
 
-    utils.mockComponentClassFunction(wrapper, "setActive", setActiveMock);
-    utils.blurChildComponent(wrapper, Input);
+    utils.blurChildComponent(
+      <Textbox id="1" setActive={setActiveMock} />,
+      Input
+    );
 
     expect(setActiveMock).toHaveBeenCalled();
+    expect(setActiveMock).toHaveBeenCalledWith("1");
   });
 
-  describe("setActive", () => {
-    it("should set state.active to true", () => {
-      const wrapper = utils.generateEnzymeWrapper(<Textbox />);
-      const initialVal = utils.getStateProperty(wrapper, "active");
+  it("should call updateValue on Input change", () => {
+    const updateValueMock = jest.fn();
 
-      utils.runComponentClassFunction(wrapper, "setActive");
+    utils.changeChildComponent(
+      <Textbox id="1" updateValue={updateValueMock} />,
+      Input,
+      { target: { value: "New Value" } }
+    );
 
-      const alteredVal = utils.getStateProperty(wrapper, "active");
+    expect(updateValueMock).toHaveBeenCalled();
+    expect(updateValueMock).toHaveBeenCalledWith("1", "New Value");
+  });
 
-      expect(initialVal).toEqual(false);
-      expect(alteredVal).toEqual(true);
+  describe("componentDidUpdate", () => {
+    it("should not call validate if it is not active", () => {
+      const validateMock = jest.fn();
+      const props = { active: false, value: "" };
+      const wrapper = utils.generateEnzymeWrapper(<Textbox {...props} />);
+
+      const newProps = { active: false, value: "New Value" };
+      utils.mockComponentClassFunction(wrapper, "validate", validateMock);
+      utils.updateProps(wrapper, newProps);
+
+      expect(validateMock).not.toHaveBeenCalled();
+    });
+
+    it("should not call validate if the value has not changed", () => {
+      const validateMock = jest.fn();
+      const props = { active: true, value: "" };
+      const wrapper = utils.generateEnzymeWrapper(<Textbox {...props} />);
+
+      const newProps = { active: true, value: "", otherProp: true };
+      utils.mockComponentClassFunction(wrapper, "validate", validateMock);
+      utils.updateProps(wrapper, newProps);
+
+      expect(validateMock).not.toHaveBeenCalled();
+    });
+
+    it("should call validate if it switches from inactive to active", () => {
+      const validateMock = jest.fn();
+      const props = { active: false, value: "value" };
+      const wrapper = utils.generateEnzymeWrapper(<Textbox {...props} />);
+
+      const newProps = { active: true, value: "value" };
+      utils.mockComponentClassFunction(wrapper, "validate", validateMock);
+      utils.updateProps(wrapper, newProps);
+
+      expect(validateMock).toHaveBeenCalled();
+    });
+
+    it("should call validate if the value changes and it is active", () => {
+      const validateMock = jest.fn();
+      const props = { active: true, value: "" };
+      const wrapper = utils.generateEnzymeWrapper(<Textbox {...props} />);
+
+      const newProps = { active: true, value: "New Value" };
+      utils.mockComponentClassFunction(wrapper, "validate", validateMock);
+      utils.updateProps(wrapper, newProps);
+
+      expect(validateMock).toHaveBeenCalled();
+    });
+  });
+
+  describe("validate", () => {
+    it("should set and error and invalidate the element if required is true and the value is empty", () => {
+      const setErrorMock = jest.fn();
+      const setFieldValidityMock = jest.fn();
+      const props = {
+        id: "1",
+        required: true,
+        setError: setErrorMock,
+        setFieldValidity: setFieldValidityMock,
+        value: ""
+      };
+
+      utils.runComponentClassFunction(<Textbox {...props} />, "validate");
+
+      expect(setErrorMock).toHaveBeenCalled();
+      expect(setErrorMock).toHaveBeenCalledWith("1", "This Field is required");
+      expect(setFieldValidityMock).toHaveBeenCalled();
+      expect(setFieldValidityMock).toHaveBeenCalledWith("1", false);
+    });
+
+    it("should set an error and invalidate the element if there is a validation function that fails", () => {
+      const setErrorMock = jest.fn();
+      const setFieldValidityMock = jest.fn();
+      const validationMock = jest.fn(() => false);
+      const props = {
+        id: "1",
+        setError: setErrorMock,
+        setFieldValidity: setFieldValidityMock,
+        validation: { error: "bad juju", func: validationMock },
+        value: "Bad value"
+      };
+
+      utils.runComponentClassFunction(<Textbox {...props} />, "validate");
+
+      expect(setErrorMock).toHaveBeenCalled();
+      expect(setErrorMock).toHaveBeenCalledWith("1", "bad juju");
+      expect(setFieldValidityMock).toHaveBeenCalled();
+      expect(setFieldValidityMock).toHaveBeenCalledWith("1", false);
+      expect(validationMock).toHaveBeenCalled();
+      expect(validationMock).toHaveBeenCalledWith("Bad value");
+    });
+
+    it("should remove set errors and validate the element if there is a validation function that passes", () => {
+      const setErrorMock = jest.fn();
+      const setFieldValidityMock = jest.fn();
+      const validationMock = jest.fn(() => true);
+      const props = {
+        id: "1",
+        required: true,
+        setError: setErrorMock,
+        setFieldValidity: setFieldValidityMock,
+        valid: false,
+        validation: { func: validationMock },
+        value: "Good boy"
+      };
+
+      utils.runComponentClassFunction(<Textbox {...props} />, "validate");
+
+      expect(setErrorMock).toHaveBeenCalled();
+      expect(setErrorMock).toHaveBeenCalledWith("1", null);
+      expect(setFieldValidityMock).toHaveBeenCalled();
+      expect(setFieldValidityMock).toHaveBeenCalledWith("1", true);
+      expect(validationMock).toHaveBeenCalled();
+      expect(validationMock).toHaveBeenCalledWith("Good boy");
+    });
+
+    it("should call nothing if it is already valid and it passed all validation", () => {
+      const setErrorMock = jest.fn();
+      const setFieldValidityMock = jest.fn();
+      const validationMock = jest.fn(() => true);
+      const props = {
+        id: "1",
+        setError: setErrorMock,
+        setFieldValidity: setFieldValidityMock,
+        valid: true,
+        validation: { func: validationMock },
+        value: "Good boy"
+      };
+
+      utils.runComponentClassFunction(<Textbox {...props} />, "validate");
+
+      expect(setErrorMock).not.toHaveBeenCalled();
+      expect(setFieldValidityMock).not.toHaveBeenCalled();
+      expect(validationMock).toHaveBeenCalled();
+      expect(validationMock).toHaveBeenCalledWith("Good boy");
+    });
+
+    it("should call nothing if it is already valid, there is no validation and it passed the required check", () => {
+      const setErrorMock = jest.fn();
+      const setFieldValidityMock = jest.fn();
+      const props = {
+        id: "1",
+        setError: setErrorMock,
+        setFieldValidity: setFieldValidityMock,
+        valid: true,
+        value: "Passing value"
+      };
+
+      utils.runComponentClassFunction(<Textbox {...props} />, "validate");
+
+      expect(setErrorMock).not.toHaveBeenCalled();
+      expect(setFieldValidityMock).not.toHaveBeenCalled();
+    });
+
+    it("should remove set errors and validate the element if it is invalid, there is no validation and it passed the required check", () => {
+      const setErrorMock = jest.fn();
+      const setFieldValidityMock = jest.fn();
+      const props = {
+        id: "1",
+        setError: setErrorMock,
+        setFieldValidity: setFieldValidityMock,
+        valid: false,
+        value: "Free pass"
+      };
+
+      utils.runComponentClassFunction(<Textbox {...props} />, "validate");
+
+      expect(setErrorMock).toHaveBeenCalled();
+      expect(setErrorMock).toHaveBeenCalledWith("1", null);
+      expect(setFieldValidityMock).toHaveBeenCalled();
+      expect(setFieldValidityMock).toHaveBeenCalledWith("1", true);
     });
   });
 
