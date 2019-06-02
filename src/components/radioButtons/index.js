@@ -29,8 +29,8 @@ export const RadioButtonOptionsContainer = styled.div`
   @media only screen and (max-width: 768px) {
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 0em 1em 1em;
-    width: calc(100% - 2em);
+    padding: 0em 0 1em;
+    width: 100%;
   }
 `;
 
