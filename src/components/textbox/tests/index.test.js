@@ -2,7 +2,13 @@ import React from "react";
 
 import * as utils from "../../../utils/testing";
 import { theme } from "../../../theme";
-import { Input, Textbox, TextboxContainer } from "../";
+import {
+  Input,
+  Textbox,
+  TextboxContainer,
+  TextboxErrorContainer,
+  TextboxMainContainer
+} from "../";
 
 describe("Textbox", () => {
   it("should render without crashing", () => {
@@ -257,6 +263,66 @@ describe("Textbox", () => {
         <TextboxContainer theme={theme} />,
         "color",
         theme.colors.inputText
+      );
+    });
+  });
+
+  describe("TextboxErrorContainer", () => {
+    it("should render without crashing", () => {
+      utils.testComponentRender(<TextboxErrorContainer />);
+    });
+
+    it("should have a color of theme.colors.accentAlt", () => {
+      utils.testCssPropery(
+        <TextboxErrorContainer theme={theme} />,
+        "color",
+        theme.colors.accentAlt
+      );
+    });
+
+    it("should have a display of flex if error is truthy", () => {
+      utils.testCssPropery(
+        <TextboxErrorContainer error="an error!!" theme={theme} />,
+        "color",
+        theme.colors.accentAlt
+      );
+    });
+
+    it("should have a display of none if error is falsy", () => {
+      utils.testCssPropery(
+        <TextboxErrorContainer theme={theme} />,
+        "color",
+        theme.colors.accentAlt
+      );
+    });
+  });
+
+  describe("TextboxMainContainer", () => {
+    it("should render without crashing", () => {
+      utils.testComponentRender(<TextboxMainContainer />);
+    });
+
+    it("should have a color and i color of theme.colors.accentAlt if error is truthy", () => {
+      utils.testCssPropery(
+        <TextboxMainContainer error="an error!!" theme={theme} />,
+        "color",
+        theme.colors.accentAlt
+      );
+
+      utils.testCssModifierPropery(
+        <TextboxMainContainer error="an error!!" theme={theme} />,
+        "color",
+        theme.colors.accentAlt,
+        "i"
+      );
+    });
+
+    it("should have a i color of transparent if error is truthy", () => {
+      utils.testCssModifierPropery(
+        <TextboxMainContainer theme={theme} />,
+        "color",
+        "transparent",
+        "i"
       );
     });
   });

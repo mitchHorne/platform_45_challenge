@@ -3,15 +3,24 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 export const TextboxContainer = styled.div`
-  align-items: center;
   color: ${props => props.theme.colors.inputText};
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 1em 0;
   width: 100%;
+`;
+
+export const TextboxMainContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  ${props => (props.error ? `color: ${props.theme.colors.accentAlt};` : "")};
 
   i {
-    color: transparent;
+    color: ${props =>
+      props.error ? props.theme.colors.accentAlt : "transparent"};
     font-size: 0.5em;
     padding-right: 0.5em;
     position: relative;
@@ -19,25 +28,43 @@ export const TextboxContainer = styled.div`
   }
 `;
 
+export const TextboxErrorContainer = styled.div`
+  color: ${props => props.theme.colors.accentAlt};
+  display: ${props => (props.show ? "flex" : "none")};
+  font-size: 0.75em;
+  justify-content: flex-end;
+  padding: 0.5em 0;
+  width: 100%;
+`;
+
 export const Input = styled.input`
   background: ${props => props.theme.colors.inputBackground};
-  border: 1.2px solid transparent;
+  border: 1.2px solid
+    ${props => (props.error ? props.theme.colors.accentAlt : "transparent")};
   border-radius: 5px;
   font-size: 1em;
   padding: 1em;
   transition: all 0.25s;
   width: 80%;
 
+  ${props => (props.error ? `color: ${props.theme.colors.accentAlt}` : "")};
+
   ::placeholder {
     color: ${props => props.theme.colors.inpurtPlaceholder};
   }
 
   :hover {
-    border-color: ${props => props.theme.colors.inputBorder};
+    border-color: ${props =>
+      props.error
+        ? props.theme.colors.accentAlt
+        : props.theme.colors.inputBorder};
   }
 
   :focus {
-    border-color: ${props => props.theme.colors.inputBorder};
+    border-color: ${props =>
+      props.error
+        ? props.theme.colors.accentAlt
+        : props.theme.colors.inputBorder};
     outline: 0;
   }
 `;
@@ -94,6 +121,7 @@ export class Textbox extends Component {
 
   render() {
     const {
+      error,
       id,
       label,
       placeholder,
@@ -104,23 +132,29 @@ export class Textbox extends Component {
 
     return (
       <TextboxContainer>
-        <label>
-          <i className="fas fa-circle" />
-          {label}
-        </label>
-        <Input
-          onBlur={() => setActive(id)}
-          onChange={e => updateValue(id, e.target.value)}
-          placeholder={placeholder}
-          type="text"
-          value={value}
-        />
+        <TextboxMainContainer error={error}>
+          <label>
+            <i className="fas fa-circle" />
+            {label}
+          </label>
+          <Input
+            onBlur={() => setActive(id)}
+            onChange={e => updateValue(id, e.target.value)}
+            error={error}
+            placeholder={placeholder}
+            type="text"
+            value={value}
+          />
+        </TextboxMainContainer>
+        <TextboxErrorContainer show={error}>{error}</TextboxErrorContainer>
       </TextboxContainer>
     );
   }
 }
 
 Textbox.propTypes = {
+  active: PropTypes.bool,
+  error: PropTypes.string,
   id: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
