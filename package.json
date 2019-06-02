@@ -6,6 +6,8 @@
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-calendar": "^2.19.0",
+    "react-click-outside": "^3.0.1",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-loading": "^2.0.3",
