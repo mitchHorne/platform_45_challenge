@@ -86,7 +86,7 @@ export class DatePickerClass extends Component {
   }
 
   formatDate(date) {
-    if (!date) return;
+    if (!date) return "";
 
     let day = date.getDate();
     let month = date.getMonth() + 1;
@@ -123,6 +123,7 @@ export class DatePickerClass extends Component {
             }}
             placeholder={this.formatDate(new Date())}
             ref="display"
+            readOnly
             type="text"
             value={this.formatDate(value)}
           />
@@ -148,8 +149,7 @@ DatePickerClass.propTypes = {
   label: PropTypes.string,
   setActive: PropTypes.func,
   setFieldValidity: PropTypes.func,
-  updateValue: PropTypes.func,
-  value: PropTypes.string
+  updateValue: PropTypes.func
 };
 
 export const DatePicker = enhanceWithClickOutside(DatePickerClass);

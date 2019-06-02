@@ -89,7 +89,7 @@ describe("DatePickerClass", () => {
         "formatDate"
       );
 
-      expect(received).toBeUndefined();
+      expect(received).toEqual("");
     });
 
     it("should return a formatted date and add 0's to day and month if they're < 10", () => {
