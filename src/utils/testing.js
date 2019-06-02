@@ -25,17 +25,17 @@ export function blurChildComponent(Component, ChildComponent) {
  * @param {Renderable React object || Enzyme wrapper object} Component
  * @param {React object} ChildComponent
  */
-export function clickChildComponent(Component, ChildComponent) {
+export function clickChildComponent(Component, ChildComponent, params = []) {
   // Checks if the passed component is already an enzyme wrapper
   if (Component.find)
     return Component.find(ChildComponent)
       .props()
-      .onClick();
+      .onClick(...params);
 
   shallow(Component)
     .find(ChildComponent)
     .props()
-    .onClick();
+    .onClick(...params);
 }
 
 /**
@@ -102,8 +102,8 @@ export function testComponentRender(Component) {
 /**
  * Tests if a react component has a specific css property
  * @param {Renderable React object} Component
- * @param {String}                  property
- * @param {String}                  expectedValue
+ * @param {String}  property
+ * @param {String}  expectedValue
  */
 export function testCssPropery(Component, property, expectedValue) {
   const component = renderer.create(Component).toJSON();
@@ -113,9 +113,9 @@ export function testCssPropery(Component, property, expectedValue) {
 /**
  * Tests if a react component has a specific css property at a given media query breakpoint
  * @param {Renderable React object} Component
- * @param {String}                  property
- * @param {String}                  expectedValue
- * @param {String}                  media
+ * @param {String}  property
+ * @param {String}  expectedValue
+ * @param {String}  media
  */
 export function testCssMediaPropery(Component, property, expectedValue, media) {
   const component = renderer.create(Component).toJSON();
@@ -125,9 +125,9 @@ export function testCssMediaPropery(Component, property, expectedValue, media) {
 /**
  * Tests if a react component has a specific css property with a given CSS modifier
  * @param {Renderable React object} Component
- * @param {String}                  property
- * @param {String}                  expectedValue
- * @param {String}                  modifier
+ * @param {String} property
+ * @param {String} expectedValue
+ * @param {String} modifier
  */
 export function testCssModifierPropery(
   Component,
@@ -141,11 +141,12 @@ export function testCssModifierPropery(
 
 /**
  * Tests if a react component has a specific css property
- * @param {Renderable React object} Component
- * @param {Object}                  props
- * @param {Object}                  newProps
+ * @param {Renderable React object || Enzyme wrapper object} Component
+ * @param {Object} props
+ * @param {Object} newProps
  */
 export function updateProps(Component, newProps) {
-  const wrapper = shallow(Component);
-  wrapper.setProps(newProps);
+  if (Component.instance) return Component.setProps(newProps);
+
+  shallow(Component).setProps(newProps);
 }
