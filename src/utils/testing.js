@@ -78,7 +78,7 @@ export function mockComponentClassFunction(wrapper, func, mock) {
 export function runComponentClassFunction(Component, func, params = []) {
   if (Component.instance) return Component.instance()[func](...params);
 
-  shallow(Component)
+  return shallow(Component)
     .instance()
     [func](...params);
 }
