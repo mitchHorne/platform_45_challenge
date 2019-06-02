@@ -25,17 +25,17 @@ export function blurChildComponent(Component, ChildComponent) {
  * @param {Renderable React object || Enzyme wrapper object} Component
  * @param {React object} ChildComponent
  */
-export function clickChildComponent(Component, ChildComponent, params = []) {
+export function clickChildComponent(Component, ChildComponent) {
   // Checks if the passed component is already an enzyme wrapper
   if (Component.find)
     return Component.find(ChildComponent)
       .props()
-      .onClick(...params);
+      .onClick();
 
   shallow(Component)
     .find(ChildComponent)
     .props()
-    .onClick(...params);
+    .onClick();
 }
 
 /**
