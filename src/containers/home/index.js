@@ -5,6 +5,8 @@ import { SideNav } from "../../components/sideNav";
 import { Overlay } from "../../components/overlay";
 import { SubmissionForm } from "../../components/submissionForm";
 
+import { submissionFormData } from "./data";
+
 // These values would most likely be retrieved through a REST API endpoint
 // so I'm passing them down from the container, so it can handle the logic
 import ProfileImageSrc from "../../assets/profile.png";
@@ -45,7 +47,11 @@ export class Home extends Component {
           heading={overlayHeading}
           text={overlayText}
         />
-        <SubmissionForm valid={valid} toggleValid={toggleValid} />
+        <SubmissionForm
+          fields={submissionFormData}
+          valid={valid}
+          toggleValid={toggleValid}
+        />
       </FlexContainer>
     );
   }
