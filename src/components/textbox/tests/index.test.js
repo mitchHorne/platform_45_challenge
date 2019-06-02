@@ -219,11 +219,17 @@ describe("Textbox", () => {
       utils.testComponentRender(<Input />);
     });
 
-    it("should have a background of theme.colors.inputBackground", () => {
+    it("should have a background of theme.colors.inputBackground and border transparent if error is falsy", () => {
       utils.testCssPropery(
         <Input theme={theme} />,
         "background",
         theme.colors.inputBackground
+      );
+
+      utils.testCssPropery(
+        <Input theme={theme} />,
+        "border",
+        "1.2px solid transparent"
       );
     });
 
@@ -249,6 +255,14 @@ describe("Textbox", () => {
         "border-color",
         theme.colors.inputBorder,
         ":focus"
+      );
+    });
+
+    it("should have a border of theme.colors.accentAlt if error is truthy", () => {
+      utils.testCssPropery(
+        <Input error="error" theme={theme} />,
+        "border",
+        `1.2px solid ${theme.colors.accentAlt}`
       );
     });
   });
@@ -280,19 +294,19 @@ describe("Textbox", () => {
       );
     });
 
-    it("should have a display of flex if error is truthy", () => {
+    it("should have a display of flex if show is truthy", () => {
       utils.testCssPropery(
-        <TextboxErrorContainer error="an error!!" theme={theme} />,
-        "color",
-        theme.colors.accentAlt
+        <TextboxErrorContainer show="an error!!" theme={theme} />,
+        "display",
+        "flex"
       );
     });
 
-    it("should have a display of none if error is falsy", () => {
+    it("should have a display of none if show is falsy", () => {
       utils.testCssPropery(
         <TextboxErrorContainer theme={theme} />,
-        "color",
-        theme.colors.accentAlt
+        "display",
+        "none"
       );
     });
   });
