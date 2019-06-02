@@ -34,7 +34,7 @@ describe("DatePickerClass", () => {
     const closeCalendarMock = jest.fn();
     const updateValueMock = jest.fn();
     const wrapper = utils.generateEnzymeWrapper(
-      <DatePickerClass id="1" updateValue={updateValueMock} />
+      <DatePickerClass id="1" updateValue={updateValueMock} valid={true} />
     );
 
     utils.mockComponentClassFunction(
@@ -47,6 +47,23 @@ describe("DatePickerClass", () => {
     expect(closeCalendarMock).toHaveBeenCalled();
     expect(updateValueMock).toHaveBeenCalled();
     expect(updateValueMock).toHaveBeenCalledWith("1", "new date");
+  });
+
+  it("should call setFieldValidity if not valid and PickerCalendar value changes", () => {
+    const setFieldValidityMock = jest.fn();
+    const wrapper = utils.generateEnzymeWrapper(
+      <DatePickerClass
+        id="1"
+        setFieldValidity={setFieldValidityMock}
+        updateValue={() => {}}
+        valid={false}
+      />
+    );
+
+    utils.changeChildComponent(wrapper, PickerCalendar, "new date");
+
+    expect(setFieldValidityMock).toHaveBeenCalled();
+    expect(setFieldValidityMock).toHaveBeenCalledWith("1", true);
   });
 
   describe("closeCalendar", () => {

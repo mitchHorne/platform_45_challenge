@@ -110,7 +110,14 @@ export class DatePickerClass extends Component {
   }
 
   render() {
-    const { id, label, updateValue, value } = this.props;
+    const {
+      id,
+      label,
+      setFieldValidity,
+      updateValue,
+      valid,
+      value
+    } = this.props;
 
     return (
       <DatePickerContainer>
@@ -132,6 +139,7 @@ export class DatePickerClass extends Component {
             onChange={date => {
               this.closeCalendar();
               updateValue(id, date);
+              if (!valid) setFieldValidity(id, true);
             }}
             show={this.state.calendarOpen}
             value={value}
