@@ -39,6 +39,28 @@ describe("SubmissionForm", () => {
     expect(received).toEqual(expected);
   });
 
+  describe("clearForm", () => {
+    it("should clear all values according to fields data", () => {
+      const fields = [
+        { id: "1", type: formInputTypes.TEXTBOX },
+        { id: "2", type: formInputTypes.RADIO_BUTTONS }
+      ];
+      const expected = {
+        1: { active: false, error: null, valid: false, value: "" },
+        2: { active: false, error: null, valid: false, value: null }
+      };
+      const wrapper = utils.generateEnzymeWrapper(
+        <SubmissionForm fields={fields} />
+      );
+
+      utils.runComponentClassFunction(wrapper, "clearForm");
+
+      const state = wrapper.state();
+
+      expect(state).toEqual(expected);
+    });
+  });
+
   describe("renderFormFields", () => {
     it("should return a span indicating no fields if there are no fields", () => {
       const wrapper = utils.generateEnzymeWrapper(<SubmissionForm />);
@@ -196,6 +218,12 @@ describe("SubmissionForm", () => {
       const newState = wrapper.state();
 
       expect(newState).toEqual(expected);
+    });
+  });
+
+  describe("submitForm", () => {
+    it("doesn't really do much, but calling it anyhow", () => {
+      utils.runComponentClassFunction(<SubmissionForm />, "submitForm");
     });
   });
 
