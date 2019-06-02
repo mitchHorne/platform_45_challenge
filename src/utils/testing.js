@@ -102,6 +102,16 @@ export function mockComponentClassFunction(wrapper, func, mock) {
 }
 
 /**
+ * Mocks given component class function
+ * @param {Enzyme wrapper object} wrapper
+ * @param {String} func
+ * @param {Array} params
+ */
+export function mockMountedComponentClassFunction(wrapper, func, mock) {
+  wrapper.instance()[func] = mock;
+}
+
+/**
  * Runs given component class function
  * @param {Renderable React object || Enzyme wrapper object} Component
  * @param {String} func
