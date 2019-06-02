@@ -16,13 +16,50 @@ describe("DatePickerClass", () => {
     utils.testComponentRender(<DatePickerClass />);
   });
 
+  it("should call openCalendar if Input is clicked", () => {
+    const openCalendarMock = jest.fn();
+    const { openCalendar } = DatePickerClass.prototype;
+    DatePickerClass.prototype.openCalendar = openCalendarMock;
+    const wrapper = utils.generateEnzymeMountWrapper(<DatePickerClass />);
+
+    utils.clickChildComponent(wrapper, Input);
+
+    expect(openCalendarMock).toHaveBeenCalled();
+
+    // reset openCalendar
+    DatePickerClass.prototype.openCalendar = openCalendar;
+  });
+
+  it("should call closeCalendar and updateValue if PickerCalendar value changes", () => {
+    const closeCalendarMock = jest.fn();
+    const updateValueMock = jest.fn();
+    const wrapper = utils.generateEnzymeWrapper(
+      <DatePickerClass id="1" updateValue={updateValueMock} />
+    );
+
+    utils.mockComponentClassFunction(
+      wrapper,
+      "closeCalendar",
+      closeCalendarMock
+    );
+    utils.changeChildComponent(wrapper, PickerCalendar, "new date");
+
+    expect(closeCalendarMock).toHaveBeenCalled();
+    expect(updateValueMock).toHaveBeenCalled();
+    expect(updateValueMock).toHaveBeenCalledWith("1", "new date");
+  });
+
   describe("closeCalendar", () => {
     it("should just exit if state.calendarOpen is false", () => {
       const setStateMock = jest.fn();
       const wrapper = utils.generateEnzymeWrapper(<DatePickerClass />);
       const initialVal = utils.getStateProperty(wrapper, "calendarOpen");
 
-      utils.mockComponentClassFunction(wrapper, "setState", setStateMock);
+      utils.mockMountedComponentClassFunction(
+        wrapper,
+        "setState",
+        setStateMock
+      );
       utils.runComponentClassFunction(wrapper, "closeCalendar");
 
       expect(initialVal).toEqual(false);
@@ -129,7 +166,7 @@ describe("DatePickerClass", () => {
       expect(setStateMock).not.toHaveBeenCalled();
     });
 
-    it("should set state.calendarOpen to false", () => {
+    it("should set state.calendarOpen to true", () => {
       const wrapper = utils.generateEnzymeWrapper(<DatePickerClass />);
 
       const initialVal = utils.getStateProperty(wrapper, "calendarOpen");
