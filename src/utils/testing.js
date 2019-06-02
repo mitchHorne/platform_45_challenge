@@ -1,6 +1,10 @@
+import React from "react";
 import "jest-styled-components";
 import renderer from "react-test-renderer";
-import { shallow } from "enzyme";
+import { mount, shallow } from "enzyme";
+import { ThemeProvider } from "styled-components";
+
+import { theme } from "../theme";
 
 /**
  * Blurs a specified child component
@@ -66,6 +70,15 @@ export function clickChildComponent(Component, ChildComponent) {
  */
 export function generateEnzymeWrapper(Component) {
   return shallow(Component);
+}
+
+/**
+ * Creates and returns an Enzyme mopunt wrapper object
+ * @param {Renderable React object} Component
+ * @returns {Enzyme wrapper object}
+ */
+export function generateEnzymeMountWrapper(Component) {
+  return mount(<ThemeProvider theme={theme}>{Component}</ThemeProvider>);
 }
 
 /**
@@ -159,7 +172,7 @@ export function testCssModifierPropery(
 }
 
 /**
- * Tests if a react component has a specific css property
+ * Updates given compoennt's props
  * @param {Renderable React object || Enzyme wrapper object} Component
  * @param {Object} props
  * @param {Object} newProps
@@ -168,4 +181,16 @@ export function updateProps(Component, newProps) {
   if (Component.instance) return Component.setProps(newProps);
 
   shallow(Component).setProps(newProps);
+}
+
+/**
+ * Updates given compoennt's state
+ * @param {Renderable React object || Enzyme wrapper object} Component
+ * @param {Object} props
+ * @param {Object} newState
+ */
+export function updateState(Component, newState) {
+  if (Component.instance) return Component.setState(newState);
+
+  shallow(Component).setState(newState);
 }
