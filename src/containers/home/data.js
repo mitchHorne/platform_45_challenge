@@ -1,5 +1,3 @@
-import moment from "moment";
-
 import { formInputTypes } from "../../appData/types";
 import * as validation from "../../utils/validation";
 
@@ -31,8 +29,7 @@ export const submissionFormData = [
     id: "date",
     type: formInputTypes.DATE,
     label: "Date of Birth",
-    required: true,
-    starting: moment()
+    required: true
   },
   {
     id: "email",
