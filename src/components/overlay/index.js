@@ -20,6 +20,25 @@ export const OverlayContainer = styled.div`
   h1 {
     text-align: left;
   }
+
+  @media only screen and (max-width: 768px) {
+    left: 0;
+    height: 92.5vh;
+    padding: 2.5vh 5% 5vh;
+    position: absolute;
+    width: 90%;
+
+    ${props => (props.active ? "top: 100vh;" : "top: 0;")}
+
+    p {
+      font-size: 1.25em;
+    }
+
+  @media only screen and (max-width: 320px) {
+    p {
+      font-size: 1em;
+    }
+  }
 `;
 
 export const Overlay = props => {

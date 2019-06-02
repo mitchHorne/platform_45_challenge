@@ -16,6 +16,7 @@ export const Nav = styled.div`
   @media only screen and (max-width: 768px) {
     height: 90vh;
     padding: 5vh 5%;
+    position: relative;
     width: 90%;
   }
 `;
