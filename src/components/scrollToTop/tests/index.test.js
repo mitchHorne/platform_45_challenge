@@ -9,11 +9,14 @@ describe("ScrollToTop", () => {
   });
 
   describe("componentDidUpdate", () => {
-    it("should call window.scrollTo with (0,0) if the current location (url) is is changes", () => {
+    it("should call window.scrollTo with (0,0) if the current location (url) changes", () => {
       window.scrollTo = jest.fn();
-      const newProps = { location: "newLocation" };
+      const newProps = { location: { pathname: "new Location" } };
 
-      utils.updateProps(<ScrollToTop location="First location" />, newProps);
+      utils.updateProps(
+        <ScrollToTop location={{ pathname: "First location" }} />,
+        newProps
+      );
 
       expect(window.scrollTo).toHaveBeenCalled();
       expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
@@ -21,9 +24,12 @@ describe("ScrollToTop", () => {
 
     it("should not call window.scrollTo if the current location (url) does not change", () => {
       window.scrollTo = jest.fn();
-      const newProps = { location: "Same location" };
+      const newProps = { location: { pathname: "Same location" } };
 
-      utils.updateProps(<ScrollToTop location="Same location" />, newProps);
+      utils.updateProps(
+        <ScrollToTop location={{ pathname: "Same location" }} />,
+        newProps
+      );
 
       expect(window.scrollTo).not.toHaveBeenCalled();
     });

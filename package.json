@@ -6,12 +6,15 @@
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-calendar": "^2.19.0",
+    "react-click-outside": "^3.0.1",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-loading": "^2.0.3",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
+    "react-svg": "^10.0.6",
     "react-toastify": "^5.2.1",
     "styled-components": "^4.2.1"
   },
@@ -52,7 +55,10 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
       "!src/theme/*",
-      "!src/setupTests.js"
+      "!src/setupTests.js",
+      "!src/utils/testing.js",
+      "!src/**/data.js",
+      "!src/appData/*"
     ],
     "coverageThreshold": {
       "global": {
