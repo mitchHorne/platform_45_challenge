@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import { Textbox } from "../textbox";
+import { DatePicker } from "../datePicker";
 import { Radio } from "../radioButtons";
+import { Textbox } from "../textbox";
 
 import { formInputTypes } from "../../appData/types";
 
@@ -32,6 +33,12 @@ export class SubmissionForm extends Component {
         if (
           (field.type === formInputTypes.RADIO_BUTTONS && field.starting) ||
           (field.type === formInputTypes.RADIO_BUTTONS && !field.required)
+        )
+          valid = true;
+
+        if (
+          (field.type === formInputTypes.DATE && field.starting) ||
+          (field.type === formInputTypes.DATE && !field.required)
         )
           valid = true;
 
@@ -68,7 +75,19 @@ export class SubmissionForm extends Component {
 
       switch (type) {
         case formInputTypes.DATE:
-          return <span key={`DATE_INPUT_${id}`}>Not implemented Yet</span>;
+          return (
+            <DatePicker
+              active={this.state[id].active}
+              error={this.state[id].error}
+              id={id}
+              key={`DATE_INPUT_${id}`}
+              label={label}
+              setActive={this.setActive}
+              setFieldValidity={this.setFieldValidity}
+              updateValue={this.updateFieldValue}
+              value={this.state[id].value}
+            />
+          );
 
         case formInputTypes.RADIO_BUTTONS:
           return (

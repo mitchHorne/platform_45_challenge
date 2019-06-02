@@ -2,6 +2,7 @@ import React from "react";
 
 import * as utils from "../../../utils/testing";
 import { FormContainer, SubmissionForm } from "../";
+import { DatePicker } from "../../datePicker";
 import { Radio } from "../../radioButtons";
 import { Textbox } from "../../textbox";
 
@@ -17,7 +18,9 @@ describe("SubmissionForm", () => {
       { id: "1", starting: "" },
       { id: "2", starting: "5" },
       { id: "3", starting: "Something", type: formInputTypes.RADIO_BUTTONS },
-      { id: "4", required: false, type: formInputTypes.RADIO_BUTTONS }
+      { id: "4", required: false, type: formInputTypes.RADIO_BUTTONS },
+      { id: "3", starting: "Something", type: formInputTypes.DATE },
+      { id: "4", required: false, type: formInputTypes.DATE }
     ];
     const wrapper = utils.generateEnzymeWrapper(
       <SubmissionForm fields={fields} />
@@ -26,6 +29,8 @@ describe("SubmissionForm", () => {
     const expected = {
       1: { active: false, error: null, valid: false, value: "" },
       2: { active: false, error: null, valid: false, value: "5" },
+      3: { active: false, error: null, valid: true, value: "Something" },
+      4: { active: false, error: null, valid: true, value: undefined },
       3: { active: false, error: null, valid: true, value: "Something" },
       4: { active: false, error: null, valid: true, value: undefined }
     };
@@ -111,7 +116,17 @@ describe("SubmissionForm", () => {
           valid={wrapper.state().gender.valid}
           value={wrapper.state().gender.value}
         />,
-        <span key="DATE_INPUT_date">Not implemented Yet</span>,
+        <DatePicker
+          active={wrapper.state().name.active}
+          error={wrapper.state().name.error}
+          id="date"
+          key="DATE_INPUT_date"
+          label="Date of Birth"
+          setActive={wrapper.instance().setActive}
+          setFieldValidity={wrapper.instance().setFieldValidity}
+          updateValue={wrapper.instance().updateFieldValue}
+          value={wrapper.state().date.value}
+        />,
         <span key="UNSUPPORTED_INPUT_bad data">Not implemented Yet</span>
       ];
 
