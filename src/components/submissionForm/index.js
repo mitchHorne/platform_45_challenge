@@ -63,6 +63,7 @@ export class SubmissionForm extends Component {
     this.state = initialState;
 
     this.clearForm = this.clearForm.bind(this);
+    this.formValidate = this.formValidate.bind(this);
     this.setActive = this.setActive.bind(this);
     this.setError = this.setError.bind(this);
     this.setFieldValidity = this.setFieldValidity.bind(this);
@@ -88,6 +89,10 @@ export class SubmissionForm extends Component {
     });
 
     this.setState(newState);
+  }
+
+  formValidate() {
+    return Object.keys(this.state).every(key => this.state[key].valid);
   }
 
   renderFormFields() {
@@ -185,6 +190,9 @@ export class SubmissionForm extends Component {
   }
 
   submitForm() {
+    // This should never occur, but just in case
+    if (!this.formValidate())
+      return toast.error("Can't you see the form is incomplete? 👀😁");
     toast.success("Form successfully submitted!");
   }
 
@@ -201,7 +209,12 @@ export class SubmissionForm extends Component {
         {this.renderFormFields()}
         <Buttoncontainer>
           <FormButton clear func={this.clearForm} label="CANCEL" />
-          <FormButton approve func={this.submitForm} label="SAVE" />
+          <FormButton
+            approve
+            disabled={!this.formValidate()}
+            func={this.submitForm}
+            label="SAVE"
+          />
         </Buttoncontainer>
       </FormContainer>
     );

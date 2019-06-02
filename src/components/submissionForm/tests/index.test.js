@@ -225,6 +225,18 @@ describe("SubmissionForm", () => {
     it("doesn't really do much, but calling it anyhow", () => {
       utils.runComponentClassFunction(<SubmissionForm />, "submitForm");
     });
+
+    it("Getting that sweet sweet 100% testing a useless if path :D", () => {
+      const formValidateMock = () => false;
+      const wrapper = utils.generateEnzymeWrapper(<SubmissionForm />);
+
+      utils.mockComponentClassFunction(
+        wrapper,
+        "formValidate",
+        formValidateMock
+      );
+      utils.runComponentClassFunction(wrapper, "submitForm");
+    });
   });
 
   describe("updateFieldValue", () => {
