@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-// import * as validation from "../../utils/validation";
 import { Textbox } from "../textbox";
+import { Radio } from "../radioButtons";
 
 import { formInputTypes } from "../../appData/types";
 
@@ -27,10 +27,18 @@ export class SubmissionForm extends Component {
 
     if (Array.isArray(props.fields))
       props.fields.forEach(field => {
+        let valid = false;
+
+        if (
+          (field.type === formInputTypes.RADIO_BUTTONS && field.starting) ||
+          (field.type === formInputTypes.RADIO_BUTTONS && !field.required)
+        )
+          valid = true;
+
         initialState[field.id] = {
           active: false,
           error: null,
-          valid: false,
+          valid,
           value: field.starting
         };
       });
@@ -48,7 +56,15 @@ export class SubmissionForm extends Component {
       return <span>No fields provided</span>;
 
     return this.props.fields.map(field => {
-      const { id, label, required, placeholder, type, validation } = field;
+      const {
+        id,
+        label,
+        options,
+        placeholder,
+        required,
+        type,
+        validation
+      } = field;
 
       switch (type) {
         case formInputTypes.DATE:
@@ -56,7 +72,16 @@ export class SubmissionForm extends Component {
 
         case formInputTypes.RADIO_BUTTONS:
           return (
-            <span key={`RADIO_BUTTONS_INPUT_${id}`}>Not implemented Yet</span>
+            <Radio
+              id={id}
+              key={`RADIO_BUTTONS_INPUT_${id}`}
+              label={label}
+              options={options}
+              setFieldValidity={this.setFieldValidity}
+              updateValue={this.updateFieldValue}
+              valid={this.state[id].valid}
+              value={this.state[id].value}
+            />
           );
 
         case formInputTypes.TEXTBOX:

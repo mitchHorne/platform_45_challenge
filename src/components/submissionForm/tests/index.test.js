@@ -2,6 +2,7 @@ import React from "react";
 
 import * as utils from "../../../utils/testing";
 import { FormContainer, SubmissionForm } from "../";
+import { Radio } from "../../radioButtons";
 import { Textbox } from "../../textbox";
 
 import { formInputTypes } from "../../../appData/types";
@@ -12,14 +13,21 @@ describe("SubmissionForm", () => {
   });
 
   it("should set it's state to the initial starting values of the fields", () => {
-    const fields = [{ id: "1", starting: "" }, { id: "2", starting: "5" }];
+    const fields = [
+      { id: "1", starting: "" },
+      { id: "2", starting: "5" },
+      { id: "3", starting: "Something", type: formInputTypes.RADIO_BUTTONS },
+      { id: "4", required: false, type: formInputTypes.RADIO_BUTTONS }
+    ];
     const wrapper = utils.generateEnzymeWrapper(
       <SubmissionForm fields={fields} />
     );
 
     const expected = {
       1: { active: false, error: null, valid: false, value: "" },
-      2: { active: false, error: null, valid: false, value: "5" }
+      2: { active: false, error: null, valid: false, value: "5" },
+      3: { active: false, error: null, valid: true, value: "Something" },
+      4: { active: false, error: null, valid: true, value: undefined }
     };
     const received = wrapper.state();
 
@@ -93,7 +101,16 @@ describe("SubmissionForm", () => {
           validation={undefined}
           value={wrapper.state().name.value}
         />,
-        <span key="RADIO_BUTTONS_INPUT_gender">Not implemented Yet</span>,
+        <Radio
+          id="gender"
+          key={`RADIO_BUTTONS_INPUT_gender`}
+          label="Gender"
+          options={fields[1].options}
+          setFieldValidity={wrapper.instance().setFieldValidity}
+          updateValue={wrapper.instance().updateFieldValue}
+          valid={wrapper.state().gender.valid}
+          value={wrapper.state().gender.value}
+        />,
         <span key="DATE_INPUT_date">Not implemented Yet</span>,
         <span key="UNSUPPORTED_INPUT_bad data">Not implemented Yet</span>
       ];
