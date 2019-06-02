@@ -44,21 +44,35 @@ export function changeChildComponent(Component, ChildComponent, params) {
 }
 
 /**
+ * Clicks on the root component
+ * @param {Renderable React object || Enzyme wrapper object} Component
+ * @param {Object} event
+ */
+export function clickComponent(Component, event) {
+  // Checks if the passed component is already an enzyme wrapper
+  if (Component.props) return Component.props().onClick(event);
+
+  shallow(Component)
+    .props()
+    .onClick(event);
+}
+/**
  * Clicks on a specified child component
  * @param {Renderable React object || Enzyme wrapper object} Component
  * @param {React object} ChildComponent
+ * @param {Object} event
  */
-export function clickChildComponent(Component, ChildComponent) {
+export function clickChildComponent(Component, ChildComponent, event = {}) {
   // Checks if the passed component is already an enzyme wrapper
   if (Component.find)
     return Component.find(ChildComponent)
       .props()
-      .onClick();
+      .onClick(event);
 
   shallow(Component)
     .find(ChildComponent)
     .props()
-    .onClick();
+    .onClick(event);
 }
 
 /**
