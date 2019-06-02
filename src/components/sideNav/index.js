@@ -35,7 +35,7 @@ export const ProfileImage = styled.img`
   width: 60%;
 
   @media only screen and (max-width: 768px) {
-    width: 75%;
+    width: 50%;
   }
 `;
 
@@ -58,7 +58,7 @@ export const OverlayToggleButton = styled.img`
   }
 
   @media only screen and (max-width: 481px) {
-    width: 25%;
+    width: 20%;
 `;
 
 export const SideNav = props => {
