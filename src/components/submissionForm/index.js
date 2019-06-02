@@ -28,6 +28,11 @@ export const Buttoncontainer = styled.div`
   justify-content: center;
   padding: 1em;
   width: 90%;
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    width: calc(100% - 2em);
+  }
 `;
 
 export class SubmissionForm extends Component {

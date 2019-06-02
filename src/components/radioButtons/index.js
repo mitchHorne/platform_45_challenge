@@ -12,6 +12,12 @@ export const RadioContainer = styled.div`
   label {
     padding-left: 0.75em;
   }
+
+  @media only screen and (max-width: 768px) {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 export const RadioButtonOptionsContainer = styled.div`
@@ -19,12 +25,23 @@ export const RadioButtonOptionsContainer = styled.div`
   padding: 1em 0;
   padding-right: 2em;
   width: 80%;
+
+  @media only screen and (max-width: 768px) {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0em 1em 1em;
+    width: calc(100% - 2em);
+  }
 `;
 
 export const RadioButtonOption = styled.div`
   align-items: center;
   display: flex;
   padding-right: 2em;
+
+  @media only screen and (max-width: 768px) {
+    margin-top: 1em;
+  }
 `;
 
 export const RadioButton = styled(ReactSVG)`

@@ -26,6 +26,16 @@ export const TextboxMainContainer = styled.div`
     position: relative;
     top: -10px;
   }
+
+  @media only screen and (max-width: 768px) {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+
+    label {
+      margin-bottom: 1em;
+    }
+  }
 `;
 
 export const TextboxErrorContainer = styled.div`
@@ -66,6 +76,10 @@ export const Input = styled.input`
         ? props.theme.colors.accentAlt
         : props.theme.colors.inputBorder};
     outline: 0;
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: calc(100% - 2em);
   }
 `;
 

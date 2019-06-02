@@ -16,6 +16,16 @@ export const DatePickerContainer = styled.div`
   label {
     padding-left: 0.75em;
   }
+
+  @media only screen and (max-width: 768px) {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+
+    label {
+      margin-bottom: 1em;
+    }
+  }
 `;
 
 export const InputContainer = styled.div`
@@ -23,6 +33,10 @@ export const InputContainer = styled.div`
   display: flex;
   position: relative;
   width: calc(80% + 2em);
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Input = styled.input`
