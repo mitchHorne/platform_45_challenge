@@ -3,3 +3,9 @@ export function validateEmail(email) {
 
   return emailRegex.test(String(email).toLowerCase());
 }
+
+export function validateMobile(mobile) {
+  const mobileRegex = /^\+(?:[0-9]●?){6,14}[0-9]$/;
+
+  return mobileRegex.test(String(mobile).toLowerCase());
+}
