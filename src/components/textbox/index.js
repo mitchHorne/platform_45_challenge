@@ -135,6 +135,7 @@ export class Textbox extends Component {
 
   render() {
     const {
+      active,
       error,
       id,
       label,
@@ -152,9 +153,11 @@ export class Textbox extends Component {
             {label}
           </label>
           <Input
-            onBlur={() => setActive(id)}
-            onChange={e => updateValue(id, e.target.value)}
             error={error}
+            onChange={e => updateValue(id, e.target.value)}
+            onFocus={() => {
+              if (!active) setActive(id);
+            }}
             placeholder={placeholder}
             type="text"
             value={value}
