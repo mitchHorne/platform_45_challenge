@@ -76,6 +76,24 @@ export function clickChildComponent(Component, ChildComponent, event = {}) {
 }
 
 /**
+ * Focus a specified child component
+ * @param {Renderable React object || Enzyme wrapper object} Component
+ * @param {React object} ChildComponent
+ */
+export function focusChildComponent(Component, ChildComponent) {
+  // Checks if the passed component is already an enzyme wrapper
+  if (Component.find)
+    return Component.find(ChildComponent)
+      .props()
+      .onBlur();
+
+  shallow(Component)
+    .find(ChildComponent)
+    .props()
+    .onFocus();
+}
+
+/**
  * Creates and returns an Enzyme wrapper object
  * This is useful when you need an instantiated wrapper object to test state transitions,
  * class functions, lifecycle hooks or the like
