@@ -15,16 +15,27 @@ describe("Textbox", () => {
     utils.testComponentRender(<Textbox />);
   });
 
-  it("should call setActive on Input blur", () => {
+  it("should call setActive on Input focus if active is false", () => {
     const setActiveMock = jest.fn();
 
-    utils.blurChildComponent(
+    utils.focusChildComponent(
       <Textbox id="1" setActive={setActiveMock} />,
       Input
     );
 
     expect(setActiveMock).toHaveBeenCalled();
     expect(setActiveMock).toHaveBeenCalledWith("1");
+  });
+
+  it("should not call setActive on Input focus if active is true", () => {
+    const setActiveMock = jest.fn();
+
+    utils.focusChildComponent(
+      <Textbox active id="1" setActive={setActiveMock} />,
+      Input
+    );
+
+    expect(setActiveMock).not.toHaveBeenCalled();
   });
 
   it("should call updateValue on Input change", () => {
