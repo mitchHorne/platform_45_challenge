@@ -27,4 +27,5 @@
 
 - An online deployed version of the application can be viewed on [Netlify](https://nervous-brown-2148e5.netlify.com/). Makes it easier to test on mobile
 - I _may_ have gone overboard with the re-usability, referring to the submission form that generates it's own state and components based on a data structure found in `/containers/home/data.js`. It is useful, as long as it is not the only form to be created on the site, otherwise it is quite supperfluous and sacrifices a bit of performance, due to form re-renders instead of component-level re-renders, and code simplicity for the added flexibility.
+- I've created a separate branch `simplified-submission-form` to demonstrate a simpler version of the submission form, due to the above mentioned
 - I added test utilities to `/utils/testing` to lessen the pain of testing React
