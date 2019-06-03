@@ -52,7 +52,7 @@ export const submissionFormData = [
     starting: "",
     validation: {
       error: "Invalid mobile number",
-      func: () => true
+      func: validation.validateMobile
     }
   },
   {
